@@ -34,4 +34,3 @@ jobs:
       with:
         name: app-debug-apk
         path: ST-University-Docs/app/build/outputs/apk/debug/app-debug.apk
-        
