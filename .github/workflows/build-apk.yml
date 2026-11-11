@@ -19,6 +19,9 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
     - name: Grant execute permission for gradlew
       run: |
         cd ST-University-Docs
@@ -27,7 +30,7 @@ jobs:
     - name: Build APK with Gradle
       run: |
         cd ST-University-Docs
-        ./gradlew assembleDebug --stacktrace
+        ./gradlew assembleDebug
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
