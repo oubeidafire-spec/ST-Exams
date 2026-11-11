@@ -19,7 +19,7 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build with Gradle
+    - name: Grant execute permission and build
       working-directory: ./ST-University-Docs
       run: |
         chmod +x gradlew
