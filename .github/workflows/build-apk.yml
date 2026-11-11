@@ -19,14 +19,29 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build with Gradle inside Subfolder
-      working-directory: ./ST-University-Docs
+    - name: Locate project and build APK
       run: |
-        chmod +x ./gradlew
+        echo "=== Checking repository structure ==="
+        ls -la
+        
+        # Determine correct path
+        if [ -d "ST-University-Docs" ]; then
+          TARGET_DIR="ST-University-Docs"
+        elif [ -d "app" ]; then
+          TARGET_DIR="."
+        else
+          # Search for folder containing gradlew
+          TARGET_DIR=$(find . -maxdepth 2 -name "gradlew" -exec dirname {} \;)
+        fi
+        
+        echo "Found project directory: $TARGET_DIR"
+        cd "$TARGET_DIR"
+        
+        chmod +x gradlew
         ./gradlew assembleDebug
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
         name: app-debug-apk
-        path: ST-University-Docs/app/build/outputs/apk/debug/app-debug.apk
+        path: '**/build/outputs/apk/debug/app-debug.apk'
